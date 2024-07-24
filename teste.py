@@ -2,42 +2,47 @@ import os
 
 class ContaBancaria:
     contas = []
+    
     def __init__(self, N_conta, titular, saldo):
         self.N_conta = N_conta
         self.titular = titular
         self.saldo = saldo
-        self.contas.append(self)
+        ContaBancaria.contas.append(self)
         self.proxima_acao()
 
-    def encontrar_conta(self):
+    @classmethod
+    def encontrar_conta(cls):
         titular = input('Quem é o titular da conta?\n')
-        for usuario in ContaBancaria.contas:
+        for usuario in cls.contas:
             if usuario.titular == titular:
                 return usuario
 
-
     def verificar_conta(self):
-
         usuario = self.encontrar_conta()
-
-        print(f'N_conta: {usuario.N_conta}')
-        print(f'Titular: {usuario.titular}')
-        print(f'Saldo: {usuario.saldo}')
-        
+        if usuario:
+            print(f'N_conta: {usuario.N_conta}')
+            print(f'Titular: {usuario.titular}')
+            print(f'Saldo: {usuario.saldo}')
+        else:
+            print('Conta não encontrada.')
         self.proxima_acao()
     
     def depositar(self, v_deposito):
         usuario = self.encontrar_conta()
-
-        print(f'Foi depositado R$ {v_deposito} na sua conta')
-        usuario.saldo += v_deposito
+        if usuario:
+            print(f'Foi depositado R$ {v_deposito} na sua conta')
+            usuario.saldo += v_deposito
+        else:
+            print('Conta não encontrada.')
         self.proxima_acao()
 
     def sacar(self, v_saque):
-        usuario = ContaBancaria.encontrar_conta()
-
-        print(f'Foi sacado R$ {v_saque} da sua conta')
-        usuario.saldo -= v_saque
+        usuario = self.encontrar_conta()
+        if usuario:
+            print(f'Foi sacado R$ {v_saque} da sua conta')
+            usuario.saldo -= v_saque
+        else:
+            print('Conta não encontrada.')
         self.proxima_acao()
 
     def menu(self):
@@ -73,7 +78,6 @@ class ContaBancaria:
             os.system('cls')
             self.menu()
 
-conta_inicial = ContaBancaria('000', 'admin', 0)
-
-
-
+# Crie uma instância da classe ContaBancaria para iniciar o menu
+#conta_inicial = ContaBancaria("0000", "admin", 0)
+ContaBancaria.menu()
