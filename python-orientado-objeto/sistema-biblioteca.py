@@ -25,6 +25,11 @@ class Biblioteca:
                 cls.emprestimos.update({usuario:livro})
         menu()
 
+    @classmethod
+    def livros_emprestados(cls):
+        print(cls.emprestimos)
+        menu()
+
 def menu():
     print("""
     ==========
@@ -34,7 +39,8 @@ def menu():
     1 - Cadastro usuario
     2 - Cadastro Livro
     3 - Emprestar Livro
-    4 - Sair
+    4 - Livros emprestados
+    5 - Sair
     """)
 
     a = input()
@@ -47,5 +53,8 @@ def menu():
 
     elif a == '3':
         Biblioteca.emprestar_livro()
+    
+    elif a == '4':
+        Biblioteca.livros_emprestados()
 
 menu()
